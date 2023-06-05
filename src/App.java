@@ -1,14 +1,13 @@
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 public class App extends JFrame {
     Container panel;
     JTextField pantalla = new JTextField();
+    
 
     public App(){
 
@@ -24,7 +23,7 @@ public class App extends JFrame {
         JButton cero = new JButton(Integer.toString(0));
         JButton coma = new JButton(",");
         JButton igual = new JButton("=");
-        JButton division = new JButton(" ÷ ");
+        JButton division = new JButton(" / ");
         JButton multiplicar = new JButton(" * ");
         JButton restar = new JButton(" - ");
         JButton sumar = new JButton(" + ");
@@ -69,16 +68,25 @@ public class App extends JFrame {
     class  resultado implements ActionListener{
 
         public void actionPerformed(ActionEvent evento) {
-            ScriptEngineManager manager = new ScriptEngineManager();
-            ScriptEngine engine = manager.getEngineByName("JavaScript");
-            try{
-                Object result = engine.eval(pantalla.getText());
-                pantalla.setText(result.toString());
-            }
-            catch (ScriptException e) {
-                throw new RuntimeException(e);
-            }
+            StringBuilder cuentachar = new StringBuilder(pantalla.getText());
+            ArrayList<Integer> lista_num = new ArrayList<>();
+            ArrayList<Character> lista_simbols = new ArrayList<>();
+            StringBuilder temporal = new StringBuilder();
+            for(int i = 0;i<cuentachar.length();i++){
+                if(Character.isDigit(cuentachar(i))){
+                    temporal.append(cuentachar(i));
+                }
+                else{
+                    if((cuentachar(i)=='+')||(cuentachar(i)=='-')||(cuentachar(i)=='*')||(cuentachar(i)=='/')){
+                        lista_simbols.add(cuentachar(i));
+                        lista_num.add(Interger.parseInt(temporal));
 
+                    }
+            }
+            if(lista_simbols(0)=='+'){
+                pantalla.setText(lista_num(0)+lista_num(1));
+            }
+            
         }
     }
 }
