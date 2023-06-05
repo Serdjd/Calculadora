@@ -23,10 +23,10 @@ public class App extends JFrame {
         JButton cero = new JButton(Integer.toString(0));
         JButton coma = new JButton(",");
         JButton igual = new JButton("=");
-        JButton division = new JButton(" / ");
-        JButton multiplicar = new JButton(" * ");
-        JButton restar = new JButton(" - ");
-        JButton sumar = new JButton(" + ");
+        JButton division = new JButton("/");
+        JButton multiplicar = new JButton("*");
+        JButton restar = new JButton("-");
+        JButton sumar = new JButton("+");
 
         cero.addActionListener(new cuenta());
         coma.addActionListener(new cuenta());
@@ -67,26 +67,37 @@ public class App extends JFrame {
     }
     class  resultado implements ActionListener{
 
-        public void actionPerformed(ActionEvent evento) {
+        public void actionPerformed(ActionEvent igual) {
             StringBuilder cuentachar = new StringBuilder(pantalla.getText());
             ArrayList<Integer> lista_num = new ArrayList<>();
             ArrayList<Character> lista_simbols = new ArrayList<>();
             StringBuilder temporal = new StringBuilder();
             for(int i = 0;i<cuentachar.length();i++){
-                if(Character.isDigit(cuentachar(i))){
-                    temporal.append(cuentachar(i));
+                if(Character.isDigit(cuentachar.charAt(i))){
+                    temporal.append(cuentachar.charAt(i));
                 }
                 else{
-                    if((cuentachar(i)=='+')||(cuentachar(i)=='-')||(cuentachar(i)=='*')||(cuentachar(i)=='/')){
-                        lista_simbols.add(cuentachar(i));
-                        lista_num.add(Interger.parseInt(temporal));
-
+                    if((cuentachar.charAt(i)=='+')||(cuentachar.charAt(i)=='-')||(cuentachar.charAt(i)=='*')||(cuentachar.charAt(i)=='/')){
+                        lista_simbols.add(cuentachar.charAt(i));
+                        lista_num.add(Integer.parseInt(String.valueOf(temporal)));
+                        temporal.setLength(0);
                     }
             }
-            if(lista_simbols(0)=='+'){
-                pantalla.setText(lista_num(0)+lista_num(1));
-            }
-            
         }
+            lista_num.add(Integer.parseInt(String.valueOf(temporal)));
+            if(lista_simbols.get(0)=='+'){
+                pantalla.setText(String.valueOf(lista_num.get(0)+lista_num.get(1)));
+            }
+            if(lista_simbols.get(0)=='-'){
+                pantalla.setText(String.valueOf(lista_num.get(0)-lista_num.get(1)));
+            }
+            if(lista_simbols.get(0)=='*'){
+                pantalla.setText(String.valueOf(lista_num.get(0)*lista_num.get(1)));
+            }
+            if(lista_simbols.get(0)=='/'){
+                pantalla.setText(String.valueOf(lista_num.get(0)/lista_num.get(1)));
+            }
+    }
+
     }
 }
